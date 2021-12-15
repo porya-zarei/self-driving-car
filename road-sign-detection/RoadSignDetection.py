@@ -23,7 +23,7 @@ class RoadSignDetector():
     
     def __init__(self, model_path):
         self.model_path = model_path
-        self.model = self.load_model()
+        self.load_model()
         self.classes = ['Speed limit(20km/h)', 'Speed limit(30km/h)', 'Speed limit(50km/h)', 'Speed limit(60km/h)', 'Speed limit(70km/h)', 'Speed limit(80km/h)', 'End of speed limit(80km/h)', 'Speed limit(100km/h)', 'Speed limit(120km/h)', 'No passing', 'No passing for vechiles over 3.5 metric tons', 'Right-of-way at the next intersection', 'Priority road', 'Yield', 'Stop', 'No vechiles', 'Vechiles over 3.5 metric tons prohibited', 'No entry', 'General caution', 'Dangerous curve to the left',
                         'Dangerous curve to the right', 'Double curve', 'Bumpy road', 'Slippery road', 'Road narrows on the right', 'Road work', 'Traffic signals', 'Pedestrians', 'Children crossing', 'Bicycles crossing', 'Beware of ice/snow', 'Wild animals crossing', 'End of all speed and passing limits', 'Turn right ahead', 'Turn left ahead', 'Ahead only', 'Go straight or right', 'Go straight or left', 'Keep right', 'Keep left', 'Roundabout mandatory', 'End of no passing', 'End of no passing by vechiles over 3.5 metric tons,']
 
@@ -31,6 +31,7 @@ class RoadSignDetector():
         # model = self.__modified_model()
         # model.load_weights(self.model_path)
         self.model = keras.models.load_model(self.model_path)
+        # print("Model loaded",self.model.summary())
         # model.compile(Adam(learning_rate=0.001), loss='categorical_crossentropy',metrics=['accuracy'])
         # return model
 
@@ -96,3 +97,10 @@ class RoadSignDetector():
         img = cv2.putText(img, str(self.probability), (point[0], point[1]+30),
                           cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, thickness)
         return img
+
+
+detector = RoadSignDetector('./resources/signs/signs_model.h5')
+img = cv2.imread('./resources/speed-limit-60.png')
+detector.predict_classes(img)
+cv2.imshow('Result', detector.get_texted_image(img))
+cv2.waitKey(0)

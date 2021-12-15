@@ -39,7 +39,7 @@ class GeneralDetector():
                         font, 0.5, (255, 0, 0), 1, cv2.LINE_AA)
         return img_boxes
 
-# img = cv2.imread('./resources/desk.png')
-# general_detector = GeneralDetector()
-# cv2.imshow('Result', general_detector.detect(img))
-# cv2.waitKey(0)
+img = cv2.imread('./resources/graphic-designer.jpeg')
+general_detector = GeneralDetector()
+cv2.imshow('Result', general_detector.detect(img))
+cv2.waitKey(0)
